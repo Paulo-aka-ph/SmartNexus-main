@@ -354,5 +354,39 @@ CREATE INDEX idx_ticket_usuario_id ON ticket (usuario_id);
 CREATE INDEX idx_ticket_contrato_id ON ticket (contrato_id);
 CREATE INDEX idx_log_auditoria_contrato_id ON log_auditoria (contrato_id);
 CREATE INDEX idx_log_auditoria_colaborador_id ON log_auditoria (colaborador_id);
- 
+
+
+CREATE TABLE demanda (
+    demanda_id      INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome_projeto    VARCHAR(100) NOT NULL,
+    empresa         VARCHAR(150) NOT NULL,
+    segmento        VARCHAR(50),
+    responsavel     VARCHAR(100) NOT NULL,
+    cnpj            VARCHAR(18),
+    email           VARCHAR(150) NOT NULL,
+    telefone        VARCHAR(20)  NOT NULL,
+    plano           VARCHAR(20)  NOT NULL CHECK (plano IN ('prata','gold','diamond','indefinido')),
+    tipo            VARCHAR(20)  NOT NULL CHECK (tipo IN ('site','marketing','ambos')),
+    orcamento       VARCHAR(20),
+    prazo           VARCHAR(20),
+    descricao       TEXT         NOT NULL,
+    endereco_site   VARCHAR(100),
+    objetivo        VARCHAR(20),
+    material        VARCHAR(20),
+    publico         VARCHAR(150),
+    regiao          VARCHAR(100),
+    perfil_instagram VARCHAR(60),
+    verba           VARCHAR(20),
+    logo            VARCHAR(10),
+    cores           VARCHAR(100),
+    referencias     TEXT,
+    basicas         TEXT,   -- lista em JSON, ex.: ["home","sobre"]
+    adicionais      TEXT,   -- lista em JSON
+    plataformas     TEXT,   -- lista em JSON
+    estilo          TEXT,   -- lista em JSON
+    status          VARCHAR(20)  NOT NULL DEFAULT 'nova'
+                    CHECK (status IN ('nova','em_analise','proposta_enviada','aprovada','recusada')),
+    data_criacao    DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
 COMMIT;
