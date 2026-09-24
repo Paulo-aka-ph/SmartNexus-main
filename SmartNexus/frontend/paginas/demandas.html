@@ -26,50 +26,125 @@
         <p>Conte o que você precisa. Quanto mais detalhes, mais precisa fica a nossa proposta.</p>
     </section>
 
-    <div class="demanda-grade">
+    <form id="form-demanda" class="formulario" novalidate>
 
-        <!-- ================= LATERAL ================= -->
-        <aside class="lateral">
-            <h2>Transforme sua ideia em um projeto.</h2>
-            <p class="lateral-texto">Preencha o pedido e nós montamos uma proposta sob medida para o seu negócio.</p>
+        <!-- ================= 1. ESCOLHA DO PLANO (tela própria) ================= -->
+        <fieldset class="bloco bloco-selecao" id="bloco-selecao">
+            <legend>Qual pacote você quer contratar?</legend>
+            <p class="dica">Escolha o que mais se parece com o que você precisa. Dá para trocar depois, sem perder o que você já escreveu.</p>
 
-            <ol class="passos">
-                <li>
-                    <span class="passo-num">1</span>
-                    <div>
-                        <strong>Conte sua ideia</strong>
-                        <small>Preencha o formulário com o que você imagina.</small>
-                    </div>
-                </li>
-                <li>
-                    <span class="passo-num">2</span>
-                    <div>
-                        <strong>Analisamos e enviamos a proposta</strong>
-                        <small>Você recebe o escopo, o valor e o prazo.</small>
-                    </div>
-                </li>
-                <li>
-                    <span class="passo-num">3</span>
-                    <div>
-                        <strong>Leia o contrato e aprove</strong>
-                        <small>Você só paga depois de aceitar o contrato.</small>
-                    </div>
-                </li>
-            </ol>
+            <div class="opcoes-plano">
 
-            <div class="resumo" aria-live="polite">
-                <h3>Seu pedido até agora</h3>
-                <dl id="resumo-lista"></dl>
-                <p class="resumo-nota">Valores "a partir de", para o pacote padrão. O valor final aparece na proposta.</p>
+                <label class="opcao opcao-prata">
+                    <input type="radio" name="plano" value="prata"
+                           data-nome="Prata" data-preco="R$ 1.150"
+                           data-cobranca="Pagamento único"
+                           data-tipo="marketing" data-max-plat="2">
+                    <span class="opcao-corpo">
+                        <strong>Prata</strong>
+                        <em>a partir de R$ 1.150</em>
+                        <small>5 anúncios em 2 plataformas, redes sociais e 45 dias de acompanhamento.</small>
+                    </span>
+                </label>
+
+                <label class="opcao opcao-gold">
+                    <input type="radio" name="plano" value="gold"
+                           data-nome="Gold" data-preco="R$ 1.650"
+                           data-cobranca="Pagamento único + aluguel mensal do site"
+                           data-tipo="site">
+                    <span class="opcao-corpo">
+                        <strong>Gold <span class="selo-mini">Recomendado</span></strong>
+                        <em>a partir de R$ 1.650</em>
+                        <small>Site simples com as funcionalidades básicas e aluguel mensal.</small>
+                    </span>
+                </label>
+
+                <label class="opcao opcao-diamond">
+                    <input type="radio" name="plano" value="diamond"
+                           data-nome="Diamond" data-preco="R$ 2.500"
+                           data-cobranca="Pagamento único + aluguel mensal do site"
+                           data-tipo="ambos" data-max-plat="3" data-max-add="3">
+                    <span class="opcao-corpo">
+                        <strong>Diamond</strong>
+                        <em>a partir de R$ 2.500</em>
+                        <small>Site com 3 funcionalidades adicionais e 10 anúncios em 3 plataformas.</small>
+                    </span>
+                </label>
+
+                <label class="opcao opcao-indefinido">
+                    <input type="radio" name="plano" value="indefinido" id="plano-indefinido"
+                           data-nome="A definir">
+                    <span class="opcao-corpo">
+                        <strong>Ainda não sei</strong>
+                        <em>sem valor definido</em>
+                        <small>Conte sua ideia e indicamos o plano mais adequado.</small>
+                    </span>
+                </label>
+
             </div>
-        </aside>
 
-        <!-- ================= FORMULÁRIO ================= -->
-        <div class="painel">
+            <!-- Só aparece quando o plano é "Ainda não sei" -->
+            <div class="tipo-indefinido" id="tipo-indefinido" hidden>
+                <p class="grupo-titulo">O que você precisa?</p>
+                <div class="chips">
+                    <label class="chip"><input type="radio" name="tipo" value="site">
+                        <span>Um site</span></label>
+                    <label class="chip"><input type="radio" name="tipo" value="marketing">
+                        <span>Anúncios e redes sociais</span></label>
+                    <label class="chip"><input type="radio" name="tipo" value="ambos">
+                        <span>Os dois</span></label>
+                </div>
+            </div>
+        </fieldset>
 
-            <form id="form-demanda" class="formulario" novalidate>
+        <!-- ================= RESTANTE DO PEDIDO (aparece após escolher o plano) ================= -->
+        <div class="demanda-grade" id="area-formulario" hidden>
 
-                <!-- 1. SOBRE VOCÊ -->
+            <!-- ================= LATERAL ================= -->
+            <aside class="lateral">
+                <h2>Transforme sua ideia em um projeto.</h2>
+                <p class="lateral-texto">Preencha o pedido e nós montamos uma proposta sob medida para o seu negócio.</p>
+
+                <ol class="passos">
+                    <li>
+                        <span class="passo-num">1</span>
+                        <div>
+                            <strong>Conte sua ideia</strong>
+                            <small>Preencha o formulário com o que você imagina.</small>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="passo-num">2</span>
+                        <div>
+                            <strong>Analisamos e enviamos a proposta</strong>
+                            <small>Você recebe o escopo, o valor e o prazo.</small>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="passo-num">3</span>
+                        <div>
+                            <strong>Leia o contrato e aprove</strong>
+                            <small>Você só paga depois de aceitar o contrato.</small>
+                        </div>
+                    </li>
+                </ol>
+
+                <div class="resumo" aria-live="polite">
+                    <h3>Seu pedido até agora</h3>
+                    <dl id="resumo-lista"></dl>
+                    <p class="resumo-nota">Valores "a partir de", para o pacote padrão. O valor final aparece na proposta.</p>
+                </div>
+            </aside>
+
+            <!-- ================= FORMULÁRIO ================= -->
+            <div class="painel" id="painel-formulario">
+
+                <div class="plano-escolhido">
+                    <span>Pedido de plano: <strong id="plano-escolhido-nome"></strong></span>
+                    <button type="button" id="trocar-plano">Trocar plano</button>
+                </div>
+
+                <!-- 2. SOBRE VOCÊ -->
                 <fieldset class="bloco">
                     <legend>Sobre você e sua empresa</legend>
                     <p class="dica">Usamos esses dados para entrar em contato e preparar a proposta.</p>
@@ -132,77 +207,9 @@
                     </div>
                 </fieldset>
 
-                <!-- 2. PLANO -->
-                <fieldset class="bloco">
-                    <legend>Plano de interesse</legend>
-                    <p class="dica">Escolha o plano que mais se parece com o que você quer. Você pode mudar depois.</p>
-
-                    <div class="opcoes-plano">
-
-                        <label class="opcao">
-                            <input type="radio" name="plano" value="prata"
-                                   data-nome="Prata" data-preco="R$ 1.150"
-                                   data-cobranca="Pagamento único"
-                                   data-tipo="marketing" data-max-plat="2">
-                            <span class="opcao-corpo">
-                                <strong>Prata</strong>
-                                <em>a partir de R$ 1.150</em>
-                                <small>5 anúncios em 2 plataformas, redes sociais e 45 dias de acompanhamento.</small>
-                            </span>
-                        </label>
-
-                        <label class="opcao">
-                            <input type="radio" name="plano" value="gold"
-                                   data-nome="Gold" data-preco="R$ 1.650"
-                                   data-cobranca="Pagamento único + aluguel mensal do site"
-                                   data-tipo="site">
-                            <span class="opcao-corpo">
-                                <strong>Gold <span class="selo-mini">Recomendado</span></strong>
-                                <em>a partir de R$ 1.650</em>
-                                <small>Site simples com as funcionalidades básicas e aluguel mensal.</small>
-                            </span>
-                        </label>
-
-                        <label class="opcao">
-                            <input type="radio" name="plano" value="diamond"
-                                   data-nome="Diamond" data-preco="R$ 2.500"
-                                   data-cobranca="Pagamento único + aluguel mensal do site"
-                                   data-tipo="ambos" data-max-plat="3" data-max-add="3">
-                            <span class="opcao-corpo">
-                                <strong>Diamond</strong>
-                                <em>a partir de R$ 2.500</em>
-                                <small>Site com 3 funcionalidades adicionais e 10 anúncios em 3 plataformas.</small>
-                            </span>
-                        </label>
-
-                        <label class="opcao">
-                            <input type="radio" name="plano" value="indefinido" id="plano-indefinido"
-                                   data-nome="A definir" checked>
-                            <span class="opcao-corpo">
-                                <strong>Ainda não sei</strong>
-                                <em>sem valor definido</em>
-                                <small>Conte sua ideia e indicamos o plano mais adequado.</small>
-                            </span>
-                        </label>
-
-                    </div>
-                </fieldset>
-
                 <!-- 3. DETALHES DO PROJETO -->
                 <fieldset class="bloco">
                     <legend>Detalhes do projeto</legend>
-
-                    <div class="campo">
-                        <label for="tipo">Tipo de projeto</label>
-                        <select id="tipo" name="tipo" data-obrigatorio>
-                            <option value="">Selecione</option>
-                            <option value="site">Site</option>
-                            <option value="marketing">Anúncios e redes sociais</option>
-                            <option value="ambos">Site + anúncios e redes sociais</option>
-                        </select>
-                        <span class="erro" role="alert"></span>
-                        <p class="dica dica-fina">Ao escolher, mostramos as perguntas certas para o seu caso.</p>
-                    </div>
 
                     <div class="linha duas">
                         <div class="campo">
@@ -239,7 +246,7 @@
                     </div>
                 </fieldset>
 
-                <!-- 4. SITE (aparece se o tipo incluir site) -->
+                <!-- 4. SITE (aparece se o pedido incluir site) -->
                 <fieldset class="bloco" data-bloco="site" hidden>
                     <legend>Seu site</legend>
                     <p class="dica">O site é hospedado pela Smart Nexus e você o usa mediante aluguel mensal.</p>
@@ -280,7 +287,7 @@
                     </div>
                 </fieldset>
 
-                <!-- 5. MARKETING (aparece se o tipo incluir anúncios) -->
+                <!-- 5. MARKETING (aparece se o pedido incluir anúncios) -->
                 <fieldset class="bloco" data-bloco="marketing" hidden>
                     <legend>Seus anúncios e redes sociais</legend>
 
@@ -409,25 +416,25 @@
                     <p class="envio-nota">Enviar o pedido não gera cobrança. Você recebe uma proposta e lê o contrato antes de pagar.</p>
                 </div>
 
-            </form>
-
-            <!-- CONFIRMAÇÃO -->
-            <div id="sucesso" class="sucesso" hidden>
-                <h2 id="sucesso-titulo" tabindex="-1">Pedido enviado</h2>
-                <p>Recebemos os detalhes do seu projeto. Vamos entrar em contato pelo e-mail <strong id="sucesso-email"></strong> com a proposta.</p>
-                <ul class="sucesso-lista">
-                    <li>Analisamos o pedido e montamos o escopo.</li>
-                    <li>Você recebe a proposta com valor e prazo.</li>
-                    <li>Você lê o contrato e só paga depois de aceitar.</li>
-                </ul>
-                <div class="sucesso-acoes">
-                    <a href="planos.html" class="enviar enviar-link">Ver planos</a>
-                    <button type="button" class="secundario" id="novo-pedido">Fazer outro pedido</button>
+                <!-- CONFIRMAÇÃO -->
+                <div id="sucesso" class="sucesso" hidden>
+                    <h2 id="sucesso-titulo" tabindex="-1">Pedido enviado</h2>
+                    <p>Recebemos os detalhes do seu projeto. Vamos entrar em contato pelo e-mail <strong id="sucesso-email"></strong> com a proposta.</p>
+                    <ul class="sucesso-lista">
+                        <li>Analisamos o pedido e montamos o escopo.</li>
+                        <li>Você recebe a proposta com valor e prazo.</li>
+                        <li>Você lê o contrato e só paga depois de aceitar.</li>
+                    </ul>
+                    <div class="sucesso-acoes">
+                        <a href="planos.html" class="enviar enviar-link">Ver planos</a>
+                        <button type="button" class="secundario" id="novo-pedido">Fazer outro pedido</button>
+                    </div>
                 </div>
-            </div>
 
+            </div>
         </div>
-    </div>
+
+    </form>
 
 </main>
 
