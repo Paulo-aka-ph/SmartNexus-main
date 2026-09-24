@@ -2,7 +2,7 @@
    Página de demandas
    ===================================================== */
 
-.pagina-demandas {
+   .pagina-demandas {
     --ciano: #20c4d6;
     --violeta: #5a10ff;
     --violeta-claro: #f1ecff;
@@ -13,6 +13,8 @@
     --linha: #dfe2ec;
     --fundo: #f4f5fa;
     --erro: #d92d4a;
+    --acento: var(--violeta);
+    --acento-claro: var(--violeta-claro);
 
     margin: 0;
     min-height: 100vh;
@@ -70,7 +72,7 @@
 
 .demanda-titulo {
     text-align: center;
-    margin-bottom: 36px;
+    margin-bottom: 30px;
 }
 
 .demanda-titulo h1 {
@@ -84,7 +86,147 @@
     color: var(--cinza);
 }
 
-/* ===== Grade principal ===== */
+/* [hidden] precisa vencer o display dos blocos */
+.pagina-demandas [hidden] {
+    display: none !important;
+}
+
+/* ===================================================
+   1. TELA DE SELEÇÃO DO PLANO (fieldset em destaque)
+   =================================================== */
+.bloco-selecao {
+    margin: 0 0 40px;
+    padding: 34px 30px;
+    border: 0;
+    border-radius: 18px;
+    background: #fff;
+    box-shadow: 0 10px 30px rgba(28, 28, 40, 0.08);
+}
+
+.bloco-selecao legend {
+    float: left;
+    width: 100%;
+    padding: 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--tinta);
+}
+
+.bloco-selecao legend + * {
+    clear: both;
+}
+
+.bloco-selecao .dica {
+    margin: 6px 0 26px;
+    font-size: 0.92rem;
+    color: var(--cinza);
+}
+
+.opcoes-plano {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+.opcao {
+    position: relative;
+    display: block;
+    cursor: pointer;
+}
+
+.opcao input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.opcao-corpo {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    height: 100%;
+    padding: 20px 18px 18px;
+    border: 2px solid var(--linha);
+    border-radius: 14px;
+    background: #fafafc;
+    overflow: hidden;
+    transition: border-color 0.15s, background 0.15s, transform 0.15s;
+}
+
+.opcao-corpo::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: var(--linha);
+}
+
+.opcao-prata .opcao-corpo::before   { background: var(--ciano); }
+.opcao-gold .opcao-corpo::before    { background: var(--laranja); }
+.opcao-diamond .opcao-corpo::before { background: var(--violeta); }
+.opcao-indefinido .opcao-corpo::before { background: var(--cinza); }
+
+.opcao-corpo strong {
+    font-size: 1.1rem;
+    color: var(--tinta);
+}
+
+.opcao-corpo em {
+    font-style: normal;
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: var(--violeta);
+}
+
+.opcao-corpo small {
+    font-size: 0.8rem;
+    color: var(--cinza);
+}
+
+.opcao:hover .opcao-corpo {
+    border-color: #b9a4ff;
+    transform: translateY(-2px);
+}
+
+.opcao input:checked + .opcao-corpo {
+    border-color: var(--violeta);
+    background: var(--violeta-claro);
+}
+
+.opcao-prata input:checked + .opcao-corpo   { border-color: var(--ciano); background: #e7fafc; }
+.opcao-gold input:checked + .opcao-corpo    { border-color: var(--laranja); background: #fff2e6; }
+.opcao-diamond input:checked + .opcao-corpo { border-color: var(--violeta); background: var(--violeta-claro); }
+.opcao-indefinido input:checked + .opcao-corpo { border-color: var(--cinza); background: #f0f1f5; }
+
+.opcao input:focus-visible + .opcao-corpo {
+    box-shadow: 0 0 0 3px rgba(90, 16, 255, 0.3);
+}
+
+.selo-mini {
+    display: inline-block;
+    margin-left: 6px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: var(--laranja);
+    color: #fff;
+    font-size: 0.68rem;
+    font-weight: bold;
+    vertical-align: middle;
+}
+
+/* --- "Ainda não sei": pergunta extra de tipo --- */
+.tipo-indefinido {
+    margin-top: 22px;
+    padding-top: 22px;
+    border-top: 1px solid var(--linha);
+}
+
+/* ===================================================
+   2. RESTANTE DO PEDIDO
+   =================================================== */
 .demanda-grade {
     display: grid;
     grid-template-columns: 340px minmax(0, 1fr);
@@ -216,6 +358,41 @@
     box-shadow: 0 10px 30px rgba(28, 28, 40, 0.08);
 }
 
+/* Barra "Pedido de plano: X · Trocar plano", cor muda com o plano escolhido */
+.plano-escolhido {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 30px;
+    padding: 12px 18px;
+    border-radius: 10px;
+    background: var(--acento-claro);
+    font-size: 0.88rem;
+}
+
+.plano-escolhido strong {
+    color: var(--acento);
+}
+
+.plano-escolhido button {
+    border: 0;
+    background: transparent;
+    color: var(--acento);
+    font: inherit;
+    font-size: 0.82rem;
+    font-weight: bold;
+    text-decoration: underline;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+/* Tema por plano: muda a cor de foco/seleção do restante do formulário */
+.painel[data-plano="prata"]   { --acento: var(--ciano);   --acento-claro: #e7fafc; }
+.painel[data-plano="gold"]    { --acento: var(--laranja); --acento-claro: #fff2e6; }
+.painel[data-plano="diamond"] { --acento: var(--violeta); --acento-claro: var(--violeta-claro); }
+.painel[data-plano="indefinido"] { --acento: var(--cinza); --acento-claro: #f0f1f5; }
+
 .bloco {
     margin: 0;
     padding: 0 0 30px;
@@ -229,19 +406,26 @@
     border-top: 1px solid var(--linha);
 }
 
-/* [hidden] precisa vencer o display dos blocos */
-.pagina-demandas [hidden] {
-    display: none !important;
-}
-
 .bloco legend {
     float: left;
     width: 100%;
     margin: 0 0 6px;
-    padding: 0;
+    padding: 0 0 0 14px;
     font-size: 1.25rem;
     font-weight: bold;
     color: var(--tinta);
+    position: relative;
+}
+
+.bloco legend::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 3px;
+    bottom: 3px;
+    width: 4px;
+    border-radius: 4px;
+    background: var(--acento);
 }
 
 .bloco legend + * {
@@ -316,9 +500,9 @@
 .campo select:focus,
 .campo textarea:focus {
     outline: none;
-    border-color: var(--violeta);
+    border-color: var(--acento);
     background: #fff;
-    box-shadow: 0 0 0 3px rgba(90, 16, 255, 0.18);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--acento) 20%, transparent);
 }
 
 .campo [aria-invalid="true"] {
@@ -370,15 +554,15 @@
 
 .check input {
     margin-top: 2px;
-    accent-color: var(--violeta);
+    accent-color: var(--acento);
     width: 16px;
     height: 16px;
     flex: 0 0 16px;
 }
 
 .check:has(input:checked) {
-    border-color: var(--violeta);
-    background: var(--violeta-claro);
+    border-color: var(--acento);
+    background: var(--acento-claro);
 }
 
 .check:has(input:disabled) {
@@ -387,10 +571,10 @@
 }
 
 .check:has(input:focus-visible) {
-    box-shadow: 0 0 0 3px rgba(90, 16, 255, 0.25);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--acento) 25%, transparent);
 }
 
-/* ===== Chips (estilo, logo) ===== */
+/* ===== Chips (estilo, logo, tipo indefinido) ===== */
 .chips {
     display: flex;
     flex-wrap: wrap;
@@ -418,86 +602,13 @@
 }
 
 .chip input:checked + span {
-    border-color: var(--violeta);
-    background: var(--violeta);
+    border-color: var(--acento);
+    background: var(--acento);
     color: #fff;
 }
 
 .chip input:focus-visible + span {
-    box-shadow: 0 0 0 3px rgba(90, 16, 255, 0.3);
-}
-
-/* ===== Escolha de plano ===== */
-.opcoes-plano {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-}
-
-.opcao {
-    position: relative;
-    display: block;
-    cursor: pointer;
-}
-
-.opcao input {
-    position: absolute;
-    opacity: 0;
-    pointer-events: none;
-}
-
-.opcao-corpo {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    height: 100%;
-    padding: 16px 18px;
-    border: 2px solid var(--linha);
-    border-radius: 12px;
-    background: #fff;
-    transition: border-color 0.15s, background 0.15s;
-}
-
-.opcao-corpo strong {
-    font-size: 1.05rem;
-    color: var(--tinta);
-}
-
-.opcao-corpo em {
-    font-style: normal;
-    font-size: 0.85rem;
-    font-weight: bold;
-    color: var(--violeta);
-}
-
-.opcao-corpo small {
-    font-size: 0.8rem;
-    color: var(--cinza);
-}
-
-.opcao:hover .opcao-corpo {
-    border-color: #b9a4ff;
-}
-
-.opcao input:checked + .opcao-corpo {
-    border-color: var(--violeta);
-    background: var(--violeta-claro);
-}
-
-.opcao input:focus-visible + .opcao-corpo {
-    box-shadow: 0 0 0 3px rgba(90, 16, 255, 0.3);
-}
-
-.selo-mini {
-    display: inline-block;
-    margin-left: 6px;
-    padding: 2px 8px;
-    border-radius: 999px;
-    background: var(--laranja);
-    color: #fff;
-    font-size: 0.68rem;
-    font-weight: bold;
-    vertical-align: middle;
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--acento) 30%, transparent);
 }
 
 /* ===== Blocos que aparecem conforme o tipo ===== */
@@ -620,6 +731,10 @@
 
 /* ===== Responsivo ===== */
 @media (max-width: 960px) {
+    .opcoes-plano {
+        grid-template-columns: 1fr 1fr;
+    }
+
     .demanda-grade {
         grid-template-columns: 1fr;
     }
@@ -635,13 +750,25 @@
         gap: 14px;
     }
 
+    .bloco-selecao {
+        padding: 24px 18px;
+    }
+
+    .opcoes-plano {
+        grid-template-columns: 1fr;
+    }
+
     .painel {
         padding: 22px 18px;
     }
 
+    .plano-escolhido {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
     .linha.duas,
-    .lista-check,
-    .opcoes-plano {
+    .lista-check {
         grid-template-columns: 1fr;
     }
 }
