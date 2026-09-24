@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encomendar projeto | Smart Nexus</title>
+    <link rel="stylesheet" href="../estilo/base.css">
+    <link rel="stylesheet" href="../estilo/demandas.css">
+</head>
+<body class="pagina-demandas">
+
+<header class="topo">
+    <a href="index.html" class="logo">Smart Nexus</a>
+    <nav class="menu">
+        <a href="index.html">Início</a>
+        <a href="planos.html">Planos</a>
+        <a href="sobre.html">Sobre</a>
+        <a href="usuario.html">Perfil</a>
+    </nav>
+</header>
+
+<main class="demanda">
+
+    <section class="demanda-titulo">
+        <h1>Encomende seu projeto</h1>
+        <p>Conte o que você precisa. Quanto mais detalhes, mais precisa fica a nossa proposta.</p>
+    </section>
+
+    <div class="demanda-grade">
+
+        <!-- ================= LATERAL ================= -->
+        <aside class="lateral">
+            <h2>Transforme sua ideia em um projeto.</h2>
+            <p class="lateral-texto">Preencha o pedido e nós montamos uma proposta sob medida para o seu negócio.</p>
+
+            <ol class="passos">
+                <li>
+                    <span class="passo-num">1</span>
+                    <div>
+                        <strong>Conte sua ideia</strong>
+                        <small>Preencha o formulário com o que você imagina.</small>
+                    </div>
+                </li>
+                <li>
+                    <span class="passo-num">2</span>
+                    <div>
+                        <strong>Analisamos e enviamos a proposta</strong>
+                        <small>Você recebe o escopo, o valor e o prazo.</small>
+                    </div>
+                </li>
+                <li>
+                    <span class="passo-num">3</span>
+                    <div>
+                        <strong>Leia o contrato e aprove</strong>
+                        <small>Você só paga depois de aceitar o contrato.</small>
+                    </div>
+                </li>
+            </ol>
+
+            <div class="resumo" aria-live="polite">
+                <h3>Seu pedido até agora</h3>
+                <dl id="resumo-lista"></dl>
+                <p class="resumo-nota">Valores "a partir de", para o pacote padrão. O valor final aparece na proposta.</p>
+            </div>
+        </aside>
+
+        <!-- ================= FORMULÁRIO ================= -->
+        <div class="painel">
+
+            <form id="form-demanda" class="formulario" novalidate>
+
+                <!-- 1. SOBRE VOCÊ -->
+                <fieldset class="bloco">
+                    <legend>Sobre você e sua empresa</legend>
+                    <p class="dica">Usamos esses dados para entrar em contato e preparar a proposta.</p>
+
+                    <div class="campo">
+                        <label for="nome_projeto">Nome do projeto</label>
+                        <input type="text" id="nome_projeto" name="nome_projeto" data-obrigatorio
+                               placeholder="Ex.: Site da minha empresa" maxlength="100">
+                        <span class="erro" role="alert"></span>
+                    </div>
+
+                    <div class="linha duas">
+                        <div class="campo">
+                            <label for="empresa">Nome da empresa</label>
+                            <input type="text" id="empresa" name="empresa" data-obrigatorio maxlength="150">
+                            <span class="erro" role="alert"></span>
+                        </div>
+                        <div class="campo">
+                            <label for="segmento">Segmento</label>
+                            <select id="segmento" name="segmento">
+                                <option value="">Selecione</option>
+                                <option>Alimentação</option>
+                                <option>Beleza e estética</option>
+                                <option>Comércio e varejo</option>
+                                <option>Educação</option>
+                                <option>Saúde e bem-estar</option>
+                                <option>Serviços profissionais</option>
+                                <option>Tecnologia</option>
+                                <option>Outro</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="linha duas">
+                        <div class="campo">
+                            <label for="responsavel">Nome do responsável</label>
+                            <input type="text" id="responsavel" name="responsavel" data-obrigatorio maxlength="100">
+                            <span class="erro" role="alert"></span>
+                        </div>
+                        <div class="campo">
+                            <label for="cnpj">CNPJ <span class="opcional">(opcional agora)</span></label>
+                            <input type="text" id="cnpj" name="cnpj" inputmode="numeric"
+                                   placeholder="00.000.000/0000-00" maxlength="18">
+                        </div>
+                    </div>
+
+                    <div class="linha duas">
+                        <div class="campo">
+                            <label for="email">E-mail</label>
+                            <input type="email" id="email" name="email" data-obrigatorio
+                                   placeholder="nome@empresa.com" maxlength="150">
+                            <span class="erro" role="alert"></span>
+                        </div>
+                        <div class="campo">
+                            <label for="telefone">WhatsApp ou telefone</label>
+                            <input type="tel" id="telefone" name="telefone" data-obrigatorio
+                                   placeholder="(00) 00000-0000" inputmode="tel">
+                            <span class="erro" role="alert"></span>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <!-- 2. PLANO -->
+                <fieldset class="bloco">
+                    <legend>Plano de interesse</legend>
+                    <p class="dica">Escolha o plano que mais se parece com o que você quer. Você pode mudar depois.</p>
+
+                    <div class="opcoes-plano">
+
+                        <label class="opcao">
+                            <input type="radio" name="plano" value="prata"
+                                   data-nome="Prata" data-preco="R$ 1.150"
+                                   data-cobranca="Pagamento único"
+                                   data-tipo="marketing" data-max-plat="2">
+                            <span class="opcao-corpo">
+                                <strong>Prata</strong>
+                                <em>a partir de R$ 1.150</em>
+                                <small>5 anúncios em 2 plataformas, redes sociais e 45 dias de acompanhamento.</small>
+                            </span>
+                        </label>
+
+                        <label class="opcao">
+                            <input type="radio" name="plano" value="gold"
+                                   data-nome="Gold" data-preco="R$ 1.650"
+                                   data-cobranca="Pagamento único + aluguel mensal do site"
+                                   data-tipo="site">
+                            <span class="opcao-corpo">
+                                <strong>Gold <span class="selo-mini">Recomendado</span></strong>
+                                <em>a partir de R$ 1.650</em>
+                                <small>Site simples com as funcionalidades básicas e aluguel mensal.</small>
+                            </span>
+                        </label>
+
+                        <label class="opcao">
+                            <input type="radio" name="plano" value="diamond"
+                                   data-nome="Diamond" data-preco="R$ 2.500"
+                                   data-cobranca="Pagamento único + aluguel mensal do site"
+                                   data-tipo="ambos" data-max-plat="3" data-max-add="3">
+                            <span class="opcao-corpo">
+                                <strong>Diamond</strong>
+                                <em>a partir de R$ 2.500</em>
+                                <small>Site com 3 funcionalidades adicionais e 10 anúncios em 3 plataformas.</small>
+                            </span>
+                        </label>
+
+                        <label class="opcao">
+                            <input type="radio" name="plano" value="indefinido" id="plano-indefinido"
+                                   data-nome="A definir" checked>
+                            <span class="opcao-corpo">
+                                <strong>Ainda não sei</strong>
+                                <em>sem valor definido</em>
+                                <small>Conte sua ideia e indicamos o plano mais adequado.</small>
+                            </span>
+                        </label>
+
+                    </div>
+                </fieldset>
+
+                <!-- 3. DETALHES DO PROJETO -->
+                <fieldset class="bloco">
+                    <legend>Detalhes do projeto</legend>
+
+                    <div class="campo">
+                        <label for="tipo">Tipo de projeto</label>
+                        <select id="tipo" name="tipo" data-obrigatorio>
+                            <option value="">Selecione</option>
+                            <option value="site">Site</option>
+                            <option value="marketing">Anúncios e redes sociais</option>
+                            <option value="ambos">Site + anúncios e redes sociais</option>
+                        </select>
+                        <span class="erro" role="alert"></span>
+                        <p class="dica dica-fina">Ao escolher, mostramos as perguntas certas para o seu caso.</p>
+                    </div>
+
+                    <div class="linha duas">
+                        <div class="campo">
+                            <label for="orcamento">Orçamento para o projeto</label>
+                            <select id="orcamento" name="orcamento">
+                                <option value="">Selecione</option>
+                                <option value="ate-1300">Até R$ 1.300</option>
+                                <option value="1400-1900">R$ 1.400 a R$ 1.900</option>
+                                <option value="2000-2700">R$ 2.000 a R$ 2.700</option>
+                                <option value="acima-2700">Acima de R$ 2.700</option>
+                                <option value="conversar">Prefiro conversar</option>
+                            </select>
+                        </div>
+                        <div class="campo">
+                            <label for="prazo">Prazo desejado</label>
+                            <select id="prazo" name="prazo">
+                                <option value="">Selecione</option>
+                                <option value="15">Urgente (até 15 dias)</option>
+                                <option value="30">Até 30 dias</option>
+                                <option value="60">Entre 30 e 60 dias</option>
+                                <option value="livre">Sem pressa</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="campo">
+                        <label for="descricao">Descreva seu projeto</label>
+                        <textarea id="descricao" name="descricao" rows="5" maxlength="800" data-obrigatorio
+                                  placeholder="Explique sua ideia, o que sua empresa vende, quem são seus clientes e o que você espera do projeto."></textarea>
+                        <div class="rodape-campo">
+                            <span class="erro" role="alert"></span>
+                            <span class="contador" id="contador">0/800</span>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <!-- 4. SITE (aparece se o tipo incluir site) -->
+                <fieldset class="bloco" data-bloco="site" hidden>
+                    <legend>Seu site</legend>
+                    <p class="dica">O site é hospedado pela Smart Nexus e você o usa mediante aluguel mensal.</p>
+
+                    <div class="grupo">
+                        <p class="grupo-titulo">Funcionalidades básicas <span class="opcional">(Gold e Diamond)</span></p>
+                        <div class="lista-check">
+                            <label class="check"><input type="checkbox" name="basicas" value="home" checked>
+                                <span>Página inicial (Home)</span></label>
+                            <label class="check"><input type="checkbox" name="basicas" value="sobre" checked>
+                                <span>Página Sobre</span></label>
+                            <label class="check"><input type="checkbox" name="basicas" value="contato" checked>
+                                <span>Contato com formulário</span></label>
+                            <label class="check"><input type="checkbox" name="basicas" value="cadastro" checked>
+                                <span>Cadastro e login de clientes</span></label>
+                        </div>
+                    </div>
+
+                    <div class="grupo">
+                        <p class="grupo-titulo">Funcionalidades adicionais <span class="opcional">(Diamond)</span></p>
+                        <div class="lista-check">
+                            <label class="check"><input type="checkbox" name="adicionais" value="painel">
+                                <span>Painel para você editar textos e imagens</span></label>
+                            <label class="check"><input type="checkbox" name="adicionais" value="catalogo">
+                                <span>Catálogo de produtos ou portfólio</span></label>
+                            <label class="check"><input type="checkbox" name="adicionais" value="blog">
+                                <span>Blog ou notícias</span></label>
+                            <label class="check"><input type="checkbox" name="adicionais" value="orcamento">
+                                <span>Pedido de orçamento ou agendamento online</span></label>
+                        </div>
+                        <p class="dica dica-fina" id="dica-adicionais"></p>
+                    </div>
+
+                    <div class="campo">
+                        <label for="endereco_site">Endereço desejado para o site</label>
+                        <input type="text" id="endereco_site" name="endereco_site"
+                               placeholder="Ex.: minhaempresa.com.br" maxlength="100">
+                    </div>
+                </fieldset>
+
+                <!-- 5. MARKETING (aparece se o tipo incluir anúncios) -->
+                <fieldset class="bloco" data-bloco="marketing" hidden>
+                    <legend>Seus anúncios e redes sociais</legend>
+
+                    <div class="grupo">
+                        <p class="grupo-titulo">Onde você quer anunciar?</p>
+                        <div class="lista-check">
+                            <label class="check"><input type="checkbox" name="plataformas" value="instagram">
+                                <span>Instagram (Meta Ads)</span></label>
+                            <label class="check"><input type="checkbox" name="plataformas" value="youtube">
+                                <span>YouTube</span></label>
+                            <label class="check"><input type="checkbox" name="plataformas" value="tiktok">
+                                <span>TikTok</span></label>
+                            <label class="check"><input type="checkbox" name="plataformas" value="google">
+                                <span>Google Pesquisa</span></label>
+                        </div>
+                        <p class="dica dica-fina" id="dica-plataformas"></p>
+                    </div>
+
+                    <div class="linha duas">
+                        <div class="campo">
+                            <label for="objetivo">Objetivo principal</label>
+                            <select id="objetivo" name="objetivo">
+                                <option value="">Selecione</option>
+                                <option value="vender">Vender mais</option>
+                                <option value="contatos">Conseguir contatos e orçamentos</option>
+                                <option value="marca">Divulgar a marca</option>
+                                <option value="visitas">Levar visitas ao site</option>
+                            </select>
+                        </div>
+                        <div class="campo">
+                            <label for="material">Você já tem vídeos, fotos ou artes?</label>
+                            <select id="material" name="material">
+                                <option value="">Selecione</option>
+                                <option value="sim">Sim, tenho o material</option>
+                                <option value="parcial">Tenho só uma parte</option>
+                                <option value="nao">Não, preciso que vocês criem</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="linha duas">
+                        <div class="campo">
+                            <label for="publico">Quem você quer alcançar?</label>
+                            <input type="text" id="publico" name="publico" maxlength="150"
+                                   placeholder="Ex.: mulheres de 25 a 45 anos">
+                        </div>
+                        <div class="campo">
+                            <label for="regiao">Onde estão seus clientes?</label>
+                            <input type="text" id="regiao" name="regiao" maxlength="100"
+                                   placeholder="Cidade, estado ou Brasil todo">
+                        </div>
+                    </div>
+
+                    <div class="linha duas">
+                        <div class="campo">
+                            <label for="perfil_instagram">Seu perfil no Instagram <span class="opcional">(se tiver)</span></label>
+                            <input type="text" id="perfil_instagram" name="perfil_instagram"
+                                   placeholder="@suaempresa" maxlength="60">
+                        </div>
+                        <div class="campo">
+                            <label for="verba">Verba mensal para os anúncios</label>
+                            <select id="verba" name="verba">
+                                <option value="">Selecione</option>
+                                <option value="ate-300">Até R$ 300</option>
+                                <option value="300-1000">R$ 300 a R$ 1.000</option>
+                                <option value="1000-3000">R$ 1.000 a R$ 3.000</option>
+                                <option value="acima-3000">Acima de R$ 3.000</option>
+                                <option value="indefinida">Ainda não defini</option>
+                            </select>
+                        </div>
+                    </div>
+                    <p class="dica dica-fina">A verba dos anúncios é paga por você direto às plataformas e não faz parte do valor do plano.</p>
+                </fieldset>
+
+                <!-- 6. IDENTIDADE VISUAL -->
+                <fieldset class="bloco">
+                    <legend>Identidade visual</legend>
+                    <p class="dica">Ajuda a deixar o resultado com a cara da sua empresa.</p>
+
+                    <div class="grupo">
+                        <p class="grupo-titulo">Você tem logotipo?</p>
+                        <div class="chips">
+                            <label class="chip"><input type="radio" name="logo" value="tenho">
+                                <span>Sim, já tenho</span></label>
+                            <label class="chip"><input type="radio" name="logo" value="criar">
+                                <span>Não, preciso criar</span></label>
+                        </div>
+                    </div>
+
+                    <div class="campo">
+                        <label for="cores">Cores da sua marca</label>
+                        <input type="text" id="cores" name="cores" maxlength="100"
+                               placeholder="Ex.: azul e branco, ou &quot;sem preferência&quot;">
+                    </div>
+
+                    <div class="grupo">
+                        <p class="grupo-titulo">Estilo que combina com você</p>
+                        <div class="chips">
+                            <label class="chip"><input type="checkbox" name="estilo" value="moderno"><span>Moderno</span></label>
+                            <label class="chip"><input type="checkbox" name="estilo" value="minimalista"><span>Minimalista</span></label>
+                            <label class="chip"><input type="checkbox" name="estilo" value="elegante"><span>Elegante</span></label>
+                            <label class="chip"><input type="checkbox" name="estilo" value="divertido"><span>Divertido</span></label>
+                            <label class="chip"><input type="checkbox" name="estilo" value="profissional"><span>Profissional</span></label>
+                            <label class="chip"><input type="checkbox" name="estilo" value="colorido"><span>Colorido</span></label>
+                        </div>
+                    </div>
+
+                    <div class="campo">
+                        <label for="referencias">Referências <span class="opcional">(opcional)</span></label>
+                        <textarea id="referencias" name="referencias" rows="3" maxlength="500"
+                                  placeholder="Cole links de sites ou perfis que você admira."></textarea>
+                    </div>
+                </fieldset>
+
+                <!-- 7. ENVIO -->
+                <div class="envio">
+                    <div class="campo campo-aceite">
+                        <label class="check">
+                            <input type="checkbox" id="aceite" name="aceite" value="sim" data-obrigatorio>
+                            <span>Aceito ser contatado por e-mail ou WhatsApp sobre este pedido.</span>
+                        </label>
+                        <span class="erro" role="alert"></span>
+                    </div>
+
+                    <button type="submit" class="enviar">Enviar pedido</button>
+                    <p class="envio-nota">Enviar o pedido não gera cobrança. Você recebe uma proposta e lê o contrato antes de pagar.</p>
+                </div>
+
+            </form>
+
+            <!-- CONFIRMAÇÃO -->
+            <div id="sucesso" class="sucesso" hidden>
+                <h2 id="sucesso-titulo" tabindex="-1">Pedido enviado</h2>
+                <p>Recebemos os detalhes do seu projeto. Vamos entrar em contato pelo e-mail <strong id="sucesso-email"></strong> com a proposta.</p>
+                <ul class="sucesso-lista">
+                    <li>Analisamos o pedido e montamos o escopo.</li>
+                    <li>Você recebe a proposta com valor e prazo.</li>
+                    <li>Você lê o contrato e só paga depois de aceitar.</li>
+                </ul>
+                <div class="sucesso-acoes">
+                    <a href="planos.html" class="enviar enviar-link">Ver planos</a>
+                    <button type="button" class="secundario" id="novo-pedido">Fazer outro pedido</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</main>
+
+<script src="../js/demandas.js"></script>
+</body>
+</html>

@@ -1,0 +1,195 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+
+    height:100vh;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:linear-gradient(135deg,#28c5d6,#3b67d6,#6d00ff);
+
+}
+
+.container{
+
+    width:950px;
+    height: 600px;
+
+    background:#fff;
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+    display:flex;
+
+    box-shadow:0 15px 40px rgba(0,0,0,.2);
+
+}
+
+.left{
+
+    width:40%;
+
+    background:linear-gradient(180deg,#2dc5d2,#4b3dff);
+
+    color:#fff;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:40px;
+
+    text-align:center;
+
+}
+
+.left h1{
+
+    font-size:36px;
+
+    margin-bottom:20px;
+
+}
+
+.left h2{
+
+    font-size:28px;
+
+    margin-bottom:15px;
+
+}
+
+.left p{
+
+    line-height:1.7;
+
+    margin-bottom:35px;
+
+}
+
+.btn-outline{
+
+    text-decoration:none;
+
+    color:#fff;
+
+    border:2px solid #fff;
+
+    padding:12px 45px;
+
+    border-radius:30px;
+
+    transition:.3s;
+
+}
+
+.btn-outline:hover{
+
+    background:#fff;
+
+    color:#3b67d6;
+
+}
+
+.right{
+
+    width:60%;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+}
+
+.right h2{
+
+    font-size:34px;
+
+    color:#3b67d6;
+
+    margin-bottom:35px;
+
+}
+
+form{
+
+    width:70%;
+
+}
+
+input,select{
+
+    width:100%;
+
+    padding:14px;
+
+    margin-bottom:18px;
+
+    border:none;
+
+    background:#f2f2f2;
+
+    border-radius:10px;
+
+    outline:none;
+
+    font-size:15px;
+
+}
+
+button{
+
+    width:100%;
+
+    padding:15px;
+
+    border:none;
+
+    border-radius:30px;
+
+    background:#ff7300;
+
+    color:#fff;
+
+    font-size:17px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+button:hover{
+
+    background:#ff5600;
+
+    transform:translateY(-2px);
+
+}
+
+.btn-voltar{
+    width: 70px;
+    height: 70px;
+    position: absolute;
+  top: 20px;
+  left: 20px;
+}
