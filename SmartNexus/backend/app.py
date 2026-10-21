@@ -1,98 +1,50 @@
-import sqlite3
-from datetime import date
-from pathlib import Path
+"""
+backend/app.py
+Ponto de entrada do servidor Flask do Smart Nexus.
 
-from flask import Flask, jsonify, redirect, request
+Este arquivo só monta a aplicação: serve o frontend e registra as rotas.
+Cada parte tem um lugar só:
+    db.py       -> conexão com o PostgreSQL (e o comando init-db)
+    schemas.py  -> validação dos dados recebidos
+    models/     -> SQL de cada tabela
+    routes/     -> endpoints HTTP (/api/...)
 
-# Raiz do projeto (a pasta acima de backend/)
-BASE_DIR = Path(__file__).resolve().parent.parent
-DB_DIR = BASE_DIR / "database"
-DB_PATH = DB_DIR / "smartnexus.db"
+Como preparar o banco (uma vez só):
+    1. Crie um banco vazio chamado "smartnexus" no seu PostgreSQL:
+           createdb smartnexus
+    2. Ajuste DB_CONFIG em backend/db.py com o usuário/senha do seu Postgres.
+    3. Na pasta do projeto, rode:
+           flask --app backend/app.py init-db
 
-# Serve a pasta frontend/ na raiz do site:
-#   /paginas/planos.html  ->  frontend/paginas/planos.html
-#   /estilo/base.css      ->  frontend/estilo/base.css
+Como rodar o site (abra SEMPRE pelo servidor, não clicando no .html):
+    flask --app backend/app.py run --debug
+    Depois abra http://127.0.0.1:5000
+"""
+from flask import Flask, redirect
+
+from backend.db import BASE_DIR, init_db
+from backend.routes import demandas, planos, usuarios
+
 app = Flask(
     __name__,
     static_folder=str(BASE_DIR / "frontend"),
     static_url_path="",
 )
 
-
-# ---------- Banco de dados ----------
-def get_db():
-    db = sqlite3.connect(DB_PATH)
-    db.row_factory = sqlite3.Row
-    db.execute("PRAGMA foreign_keys = ON")
-    return db
+app.register_blueprint(planos.bp)
+app.register_blueprint(demandas.bp)
+app.register_blueprint(usuarios.bp)
 
 
 @app.cli.command("init-db")
-def init_db():
-    """Recria o banco do zero: DDL -> DML -> seed.
-    Uso: flask --app backend/app.py init-db"""
-    if DB_PATH.exists():
-        DB_PATH.unlink()
-    db = sqlite3.connect(DB_PATH)
-    for nome in ["ddl_tabelas.sql", "dml_tabelas.sql", "seed.sql"]:
-        arquivo = DB_DIR / nome
-        if arquivo.exists():
-            db.executescript(arquivo.read_text(encoding="utf-8"))
-            print("Executado:", nome)
-    db.commit()
-    db.close()
-    print("Banco criado em", DB_PATH)
+def init_db_command():
+    """Cria as tabelas e popula o banco. Uso: flask --app backend/app.py init-db"""
+    init_db()
 
 
-# ---------- Páginas ----------
 @app.route("/")
 def raiz():
     return redirect("/paginas/index.html")
-
-
-# ---------- API: planos ----------
-@app.route("/api/planos")
-def api_planos():
-    """Lista os planos ativos (para o front usar depois via fetch)."""
-    try:
-        db = get_db()
-        linhas = db.execute(
-            "SELECT plano_id, nome, descricao, qtd_anuncios_max, preco_base "
-            "FROM plano WHERE ativo = 1 ORDER BY preco_base"
-        ).fetchall()
-        db.close()
-    except sqlite3.Error as erro:
-        return jsonify({"erro": f"Erro no banco: {erro}"}), 500
-    return jsonify([dict(linha) for linha in linhas])
-
-
-# ---------- Cadastro de cliente ----------
-@app.route("/cadastro", methods=["POST"])
-def cadastro():
-    razao_social = request.form.get("razao_social", "").strip()
-    cnpj = request.form.get("cnpj", "").strip()
-    email = request.form.get("email", "").strip().lower()
-    telefone = request.form.get("telefone", "").strip()
-
-    if not all([razao_social, cnpj, email, telefone]):
-        return "Preencha todos os campos.", 400
-
-    db = get_db()
-    try:
-        db.execute(
-            "INSERT INTO usuario (razao_social, cnpj, email, telefone, data_cadastro) "
-            "VALUES (?, ?, ?, ?, ?)",
-            (razao_social, cnpj, email, telefone, date.today().isoformat()),
-        )
-        db.commit()
-    except sqlite3.IntegrityError:
-        return "CNPJ ou e-mail já cadastrado.", 400
-    except sqlite3.Error as erro:
-        return f"Erro no banco: {erro}", 500
-    finally:
-        db.close()
-
-    return redirect("/paginas/planos.html")
 
 
 if __name__ == "__main__":

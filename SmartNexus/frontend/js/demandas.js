@@ -214,6 +214,13 @@
                 dados[el.name] = el.value.trim();
             }
         });
+
+        // "plano" e "tipo" ficam na tela de seleção, que é escondida depois da escolha.
+        // O loop acima pula elementos escondidos, então eles são lidos direto do estado.
+        const p = planoAtual();
+        dados.plano = p ? p.value : "";
+        dados.tipo = tipoEfetivo();
+        delete dados.aceite; // só serve para a validação da tela; não é coluna do banco
         return dados;
     }
 
@@ -322,20 +329,42 @@
     $("#trocar-plano").addEventListener("click", voltarParaSelecao);
 
     /* ---------- envio ---------- */
-    form.addEventListener("submit", (e) => {
+    form.addEventListener("submit", async (e) => {
         e.preventDefault();
         if (!validarFormulario()) return;
 
         const dados = coletarDados();
+        const botao = $(".enviar", form);
+        const erroEnvio = $("#erro-envio");
+        erroEnvio.textContent = "";
+        botao.disabled = true;
+        botao.textContent = "Enviando...";
 
-        // TODO (back-end): enviar o pedido para o servidor. Exemplo:
-        // fetch("/api/demandas", {
-        //     method: "POST",
-        //     headers: { "Content-Type": "application/json" },
-        //     body: JSON.stringify(dados),
-        // });
-        console.log("Pedido pronto para enviar:", dados);
+        try {
+            const resposta = await fetch("/api/demandas", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(dados),
+            });
+            const corpo = await resposta.json().catch(() => ({}));
 
+            if (!resposta.ok) {
+                // o backend devolve { erro, detalhes: [...] } quando algo está inválido
+                const detalhes = Array.isArray(corpo.detalhes) ? " " + corpo.detalhes.join(" ") : "";
+                throw new Error((corpo.erro || "Não foi possível enviar o pedido.") + detalhes);
+            }
+        } catch (erro) {
+            botao.disabled = false;
+            botao.textContent = "Enviar pedido";
+            erroEnvio.textContent = erro instanceof TypeError
+                ? "Não foi possível falar com o servidor. Abra o site pelo endereço do Flask (http://127.0.0.1:5000) e tente de novo."
+                : erro.message;
+            erroEnvio.scrollIntoView({ behavior: movimentoReduzido ? "auto" : "smooth", block: "center" });
+            return;
+        }
+
+        botao.disabled = false;
+        botao.textContent = "Enviar pedido";
         $("#sucesso-email").textContent = dados.email;
         $$(".bloco, .envio", painel).forEach((el) => (el.hidden = true));
         sucesso.hidden = false;

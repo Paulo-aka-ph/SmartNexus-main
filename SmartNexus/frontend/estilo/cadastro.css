@@ -193,3 +193,16 @@ button:hover{
   top: 20px;
   left: 20px;
 }
+
+.msg{
+    min-height:20px;
+    margin:-6px 0 12px;
+    font-size:14px;
+    color:#c62828;
+}
+
+button:disabled{
+    opacity:.6;
+    cursor:wait;
+    transform:none;
+}

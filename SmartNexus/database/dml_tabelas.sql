@@ -90,11 +90,16 @@ INSERT INTO plataforma (plataforma_id, nome, tipo) VALUES
 (4, 'LinkedIn Ads', 'Rede Social'),
 (5, 'YouTube Ads',  'Vídeo');
 
+-- Planos IGUAIS aos da pagina planos.html / demandas.html (Prata, Gold, Diamond).
+-- preco_base = valor "a partir de" (pagamento unico); o aluguel mensal do site
+-- ainda nao tem valor definido. Gold e so site: qtd_anuncios_max = 1 e apenas
+-- um valor minimo exigido pela coluna (CHECK > 0). O plano 4 fica inativo
+-- (ativo = FALSE) para nao aparecer em /api/planos, mas o contrato 4 continua valido.
 INSERT INTO plano (plano_id, nome, descricao, qtd_anuncios_max, preco_base, periodicidade, ativo) VALUES
-(1, 'Plano Básico',             'Ideal para pequenos negócios iniciando em mídia paga.', 5,  890.00,  'mensal',     TRUE),
-(2, 'Plano Pro',                'Para empresas em crescimento com presença em múltiplas plataformas.', 15, 1890.00, 'mensal',     TRUE),
-(3, 'Plano Enterprise',         'Gestão completa para grandes contas, com todos os serviços incluídos.', 40, 4500.00, 'mensal',     TRUE),
-(4, 'Plano Trimestral Sazonal', 'Pacote voltado a campanhas de lançamento/sazonais de curta duração.', 10, 2200.00, 'trimestral', TRUE);
+(1, 'Prata',   'Para começar a anunciar com acompanhamento profissional.', 5,  1150.00, 'unico', TRUE),
+(2, 'Gold',    'Um site simples e completo para sua empresa aparecer na internet.', 1, 1650.00, 'unico', TRUE),
+(3, 'Diamond', 'Divulgação e site completo, com mais anúncios e atendimento prioritário.', 10, 2500.00, 'unico', TRUE),
+(4, 'Plano Trimestral Sazonal (legado)', 'Pacote de campanhas sazonais; não é mais vendido.', 10, 2200.00, 'trimestral', FALSE);
 
 INSERT INTO plano_servico (plano_id, servico_id) VALUES
 (1, 1), (1, 2),

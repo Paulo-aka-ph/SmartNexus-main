@@ -36,41 +36,40 @@
 
         <h2>Criar Conta</h2>
 
-        <form>
+        <form id="form-cadastro" novalidate>
 
             <input
             type="text"
-            placeholder="Nome Completo">
+            name="razao_social"
+            placeholder="Razão social da empresa"
+            maxlength="150"
+            required>
+
+            <input
+            type="text"
+            name="cnpj"
+            placeholder="CNPJ (00.000.000/0000-00)"
+            inputmode="numeric"
+            maxlength="18"
+            required>
 
             <input
             type="email"
-            placeholder="E-mail">
+            name="email"
+            placeholder="E-mail"
+            maxlength="150"
+            required>
 
             <input
             type="tel"
-            placeholder="Telefone">
+            name="telefone"
+            placeholder="Telefone com DDD"
+            inputmode="tel"
+            required>
 
-            <select>
+            <p id="msg-cadastro" class="msg" role="alert"></p>
 
-                <option>Tipo de Conta</option>
-
-                <option>Empresa</option>
-
-                <option>Particular</option>
-
-                <option>Free-lancer</option>
-
-            </select>
-
-            <input
-            type="password"
-            placeholder="Senha">
-
-            <input
-            type="password"
-            placeholder="Confirmar Senha">
-
-            <button>
+            <button type="submit">
 
                 Criar Conta
 
@@ -85,5 +84,6 @@
     ← 
     
 </button>
+<script src="../js/cadastro.js"></script>
 </body>
 </html>

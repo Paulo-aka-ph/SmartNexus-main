@@ -97,7 +97,7 @@ CREATE TABLE plano (
     descricao TEXT,
     qtd_anuncios_max INTEGER NOT NULL CHECK (qtd_anuncios_max > 0),
     preco_base NUMERIC(10,2) NOT NULL CHECK (preco_base >= 0),
-    periodicidade VARCHAR(20) NOT NULL CHECK (periodicidade IN ('mensal','trimestral','semestral','anual')),
+    periodicidade VARCHAR(20) NOT NULL CHECK (periodicidade IN ('unico','mensal','trimestral','semestral','anual')),
     ativo BOOLEAN NOT NULL DEFAULT TRUE
 );
 COMMENT ON TABLE plano IS 'Pacote comercial padrão vendido pela empresa.';
@@ -333,6 +333,56 @@ COMMENT ON COLUMN log_auditoria.valor_novo IS 'Valor do campo após a alteraçã
 COMMENT ON COLUMN log_auditoria.data_alteracao IS 'Momento da alteração.';
  
 -- ------------------------------------------------------------
+-- DOMINIO: PEDIDOS DE ORCAMENTO (formulario frontend/paginas/demandas.html)
+-- ------------------------------------------------------------
+-- Cada coluna abaixo tem o MESMO nome do campo enviado pelo formulario
+-- e usado em backend/schemas.py (CAMPOS_TEXTO_DEMANDA / CAMPOS_LISTA_DEMANDA).
+-- Se mudar um nome aqui, mude la tambem (e vice-versa).
+-- O pedido ainda nao e contrato: depois de analisado, vira contrato.
+
+CREATE TABLE IF NOT EXISTS demanda (
+    demanda_id SERIAL PRIMARY KEY,
+    nome_projeto VARCHAR(100) NOT NULL,
+    empresa VARCHAR(150) NOT NULL,
+    segmento VARCHAR(100),
+    responsavel VARCHAR(100) NOT NULL,
+    cnpj VARCHAR(20),
+    email VARCHAR(150) NOT NULL,
+    telefone VARCHAR(20) NOT NULL,
+    plano VARCHAR(20) NOT NULL CHECK (plano IN ('prata','gold','diamond','indefinido')),
+    tipo VARCHAR(20) NOT NULL CHECK (tipo IN ('site','marketing','ambos')),
+    orcamento VARCHAR(50),
+    prazo VARCHAR(50),
+    descricao TEXT NOT NULL,
+    endereco_site VARCHAR(100),
+    objetivo VARCHAR(100),
+    material VARCHAR(100),
+    publico VARCHAR(150),
+    regiao VARCHAR(100),
+    perfil_instagram VARCHAR(60),
+    verba VARCHAR(50),
+    logo VARCHAR(20),
+    cores VARCHAR(100),
+    referencias TEXT,
+    basicas JSONB NOT NULL DEFAULT '[]'::jsonb,
+    adicionais JSONB NOT NULL DEFAULT '[]'::jsonb,
+    plataformas JSONB NOT NULL DEFAULT '[]'::jsonb,
+    estilo JSONB NOT NULL DEFAULT '[]'::jsonb,
+    status VARCHAR(20) NOT NULL DEFAULT 'nova' CHECK (status IN ('nova','em_analise','proposta_enviada','fechada','descartada')),
+    data_criacao TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+COMMENT ON TABLE demanda IS 'Pedido de orçamento enviado pelo formulário de demandas, antes de virar contrato.';
+COMMENT ON COLUMN demanda.demanda_id IS 'Identificador único do pedido.';
+COMMENT ON COLUMN demanda.plano IS 'Plano escolhido no formulário (prata, gold, diamond) ou indefinido.';
+COMMENT ON COLUMN demanda.tipo IS 'Tipo de projeto: site, marketing ou ambos.';
+COMMENT ON COLUMN demanda.basicas IS 'Funcionalidades básicas do site marcadas (lista JSON).';
+COMMENT ON COLUMN demanda.adicionais IS 'Funcionalidades adicionais do site marcadas (lista JSON).';
+COMMENT ON COLUMN demanda.plataformas IS 'Plataformas de anúncio escolhidas (lista JSON).';
+COMMENT ON COLUMN demanda.estilo IS 'Estilos visuais escolhidos (lista JSON).';
+COMMENT ON COLUMN demanda.status IS 'Andamento do pedido no atendimento interno.';
+COMMENT ON COLUMN demanda.data_criacao IS 'Momento em que o pedido foi recebido.';
+
+-- ------------------------------------------------------------
 -- INDICES em chaves estrangeiras
 -- ------------------------------------------------------------
  
@@ -354,5 +404,6 @@ CREATE INDEX idx_ticket_usuario_id ON ticket (usuario_id);
 CREATE INDEX idx_ticket_contrato_id ON ticket (contrato_id);
 CREATE INDEX idx_log_auditoria_contrato_id ON log_auditoria (contrato_id);
 CREATE INDEX idx_log_auditoria_colaborador_id ON log_auditoria (colaborador_id);
+CREATE INDEX IF NOT EXISTS idx_demanda_data_criacao ON demanda (data_criacao DESC);
  
 COMMIT;
