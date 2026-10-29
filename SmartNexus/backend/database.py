@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 from dotenv import load_dotenv
-from supabase import Client, create_client
+from supabase import usuario, create_usuario
 
 # Lê o .env da pasta deste arquivo.
 caminho_env = Path(__file__).with_name(".env")
@@ -14,5 +14,5 @@ if not url or not chave:
         "Configure SUPABASE_URL e SUPABASE_KEY no arquivo .env."
     )
 # Acesso à Data API por HTTPS.
-supabase: Client = create_client(url, chave)
+supabase: usuario = create_usuario(url, chave)
 
