@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="../estilo/usuario.css">
+    <link rel="stylesheet" href="../estilo/base.css">
+
+    <title>Perfil | Smart Nexus</title>
+</head>
+
+<body>
+
+    <header class="navbar">
+        <a href="index.html" class="logo">Smart Nexus</a>
+
+        <nav class="menu">
+            <a href="index.html">Início</a>
+            <a href="demandas.html">Encomendar projeto</a>
+            <a href="sobre.html">Sobre</a>
+        </nav>
+    </header>
+
+
+    <main class="perfil">
+
+        <div class="perfil-card">
+
+            <div class="capa"></div>
+
+            <div class="perfil-conteudo">
+
+                <div class="avatar">SN</div>
+
+                <div class="perfil-topo">
+                    <div>
+                        <h1>Meu Perfil</h1>
+                        <p id="email-topo">Carregando e-mail...</p>
+                    </div>
+
+                    <button class="editar" type="button">Editar perfil</button>
+                </div>
+
+                <div class="grid">
+
+                    <section class="box">
+                        <h2>Meus dados</h2>
+
+                        <div class="item">
+                            <span>Razão social</span>
+                            <strong id="razao-social">Carregando...</strong>
+                        </div>
+
+                        <div class="item">
+                            <span>E-mail</span>
+                            <strong id="email-usuario">Carregando...</strong>
+                        </div>
+
+                        <div class="item">
+                            <span>Telefone</span>
+                            <strong id="telefone-usuario">Carregando...</strong>
+                        </div>
+
+                        <div class="item">
+                            <span>CNPJ</span>
+                            <strong id="cnpj-usuario">Carregando...</strong>
+                        </div>
+
+                        <div class="item">
+                            <span>Tipo de conta</span>
+                            <strong id="tipo-conta">Empresa</strong>
+                        </div>
+
+                        <div class="item">
+                            <span>Data de cadastro</span>
+                            <strong id="data-cadastro">Carregando...</strong>
+                        </div>
+                    </section>
+
+
+
+                    <section class="box">
+                        <h2>Meus projetos</h2>
+
+                        <div class="projeto-card">
+                            <div>
+                                <strong>Site institucional</strong>
+                                <p>Publicado recentemente</p>
+                            </div>
+                            <span class="status analise">Em análise</span>
+                        </div>
+
+                        <div class="projeto-card">
+                            <div>
+                                <strong>Landing Page</strong>
+                                <p>Projeto finalizado</p>
+                            </div>
+                            <span class="status concluido">Concluído</span>
+                        </div>
+
+                        <a href="demandas.html" class="novo-projeto">+ Novo projeto</a>
+                    </section>
+
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+
+    <footer>
+        © 2026 Smart Nexus — Todos os direitos reservados.
+    </footer>
+
+
+    <script>
+
+     
+        function definir(id, texto) {
+            document.getElementById(id).textContent = texto;
+        }
+
+        async function carregarUsuario() {
+            try {
+        
+                const resposta = await fetch("http://127.0.0.1:8000/usuario/1");
+
+                if (!resposta.ok) {
+                    throw new Error("Não foi possível buscar os dados do usuário.");
+                }
+
+                const usuario = await resposta.json();
+
+                definir("razao-social", usuario.razao_social || "Não informado");
+                definir("email-topo", usuario.email || "Não informado");
+                definir("email-usuario", usuario.email || "Não informado");
+                definir("telefone-usuario", usuario.telefone || "Não informado");
+                definir("cnpj-usuario", usuario.cnpj || "Não informado");
+
+
+                const dataCadastro = usuario.data_cadastro;
+                if (dataCadastro) {
+                    const partes = dataCadastro.split("T")[0].split("-");
+                    definir(
+                        "data-cadastro",
+                        partes.length === 3
+                            ? `${partes[2]}/${partes[1]}/${partes[0]}`
+                            : dataCadastro
+                    );
+                } else {
+                    definir("data-cadastro", "Não informado");
+                }
+
+            } catch (erro) {
+                console.error("Erro ao carregar o perfil:", erro);
+
+                definir("razao-social", "Erro ao carregar");
+                definir("email-topo", "Não foi possível carregar os dados.");
+                definir("email-usuario", "Não disponível");
+                definir("telefone-usuario", "Não disponível");
+                definir("cnpj-usuario", "Não disponível");
+                definir("data-cadastro", "Não disponível");
+            }
+        }
+
+        carregarUsuario();
+
+    </script>
+
+</body>
+
+</html>
