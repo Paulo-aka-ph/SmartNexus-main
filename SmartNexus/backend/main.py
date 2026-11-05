@@ -4,6 +4,7 @@ from fastapi.responses import JSONResponse
 from postgrest.exceptions import APIError
 from fastapi.middleware.cors import CORSMiddleware
 from controller.usuario import router
+from controller.servico import router as servico_router
 
 
 logger = logging.getLogger("uvicorn.error")
@@ -22,6 +23,8 @@ app.add_middleware(
 )
 # Registra as rotas de usuário
 app.include_router(router)
+#Rotas do serviço
+app.include_router(servico_router)
 
 
 @app.exception_handler(APIError)
